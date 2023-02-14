@@ -6,9 +6,10 @@
 
 - [Google](https://www.google.com/)
 
-### Lab6
-
-![Access]()
+### Index Accessability
+![Index Access](/img/Lab6AccessIndex.png)
+### Sales Accessability
+![Sales Access](/img/Lab6AccessIndex.png)
 
 ## Submission PR
 
