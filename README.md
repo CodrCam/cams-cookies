@@ -9,7 +9,7 @@
 ### Index Accessability
 ![Index Access](/img/Lab6AccessIndex.png)
 ### Sales Accessability
-![Sales Access](/img/Lab6AccessIndex.png)
+![Sales Access](/img/Lab6AccessSales.png)
 
 ## Submission PR
 
