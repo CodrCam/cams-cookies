@@ -1,4 +1,4 @@
-# Readme Lab 02
+# Readme Lab 06
 
 ## Author: Cameron Griffin
 
@@ -8,7 +8,7 @@
 
 ### Lab6
 
-![Access](img/lab2access.png)
+![Access]()
 
 ## Submission PR
 
