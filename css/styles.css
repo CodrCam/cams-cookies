@@ -3,21 +3,18 @@ h1, h2, h3, h4, h5, h6 {
   font-family: sans-serif;
   color: #A3C4BC;
 }
-/* A specified standard sans-serif web font for sales data (such as Arial, Verdana, or Helvetica). */
-div{
-  font-family: Arial, sans-serif;
-  background-color: #9796ba;
-  
-}
-
-text{
+p {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 body{
   background-color: #363537;
-  color: #2b2320;
+  color: #e96d40;
   text-align: center;
+  list-style: inside;
 }
-.container{
-  background-color: #7776BC;
+a:li{
+  color: fuchsia;
+}
+a:visited{
+  color: rgba(189, 225, 91, 0.691);
 }
