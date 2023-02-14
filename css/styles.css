@@ -1,10 +1,21 @@
-/* Set font-family for all headings to a sans-serif font */
 h1, h2, h3, h4, h5, h6 {
   font-family: sans-serif;
   color: #A3C4BC;
 }
 p {
   font-family: Georgia, 'Times New Roman', Times, serif;
+}
+nav {
+  float: left;
+  width: 30%;
+  height: 200%; 
+  background: #000000;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
 }
 body{
   background-color: #363537;
