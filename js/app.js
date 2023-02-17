@@ -75,6 +75,35 @@ class Store {
 
   // new function to render totals table
   static renderTotals() {
+
+    function createCookieStand(name, minCustomers, maxCustomers, avgCookies) {
+      // create new store instance
+      const newStore = new Store(name, minCustomers, maxCustomers, avgCookies);
+
+      // simulate sales and render table
+      newStore.simulateSales();
+      newStore.render();
+
+      // render totals table
+      Store.renderTotals();
+    }
+
+    const newCookieStandForm = document.getElementById('new-cookie-stand-form');
+
+    newCookieStandForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting by default
+
+      // Get the form input values and call the createCookieStand function with them
+      const name = document.getElementById('name').value;
+      const minCustomers = parseInt(document.getElementById('min-customers').value);
+      const maxCustomers = parseInt(document.getElementById('max-customers').value);
+      const avgCookies = parseFloat(document.getElementById('avg-cookies').value);
+
+      createCookieStand(name, minCustomers, maxCustomers, avgCookies);
+
+      // Clear the form inputs after creating a new cookie stand
+      newCookieStandForm.reset();
+    });
     // calculate hourly totals
     const hourlyTotals = Array(12).fill(0);
     for (const store of Store.stores) {
@@ -157,4 +186,5 @@ for (const store of Store.stores) {
   store.simulateSales();
   store.render();
 }
+
 Store.renderTotals();
