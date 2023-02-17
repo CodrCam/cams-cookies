@@ -8,6 +8,7 @@ class Store {
     this.hourlyCustomers = [];
     this.hourlyCookies = [];
     this.totalCookies = 0;
+    this.hourlyTotals = Array(12).fill(0); // initialize here
 
     for (let i = 6; i <= 19; i++) {
       this.hourlyCustomers.push(0);
@@ -25,9 +26,13 @@ class Store {
       this.hourlyCookies[i] = Math.round(this.hourlyCustomers[i] * this.avgCookies);
       this.cookiesSold[i] += this.hourlyCookies[i];
       this.totalCookies += this.hourlyCookies[i];
+
+      // update hourlyTotals for all stores
+      this.hourlyTotals[i] += this.hourlyCookies[i];
     }
   }
-  //old Render
+
+  //Table Render
   render() {
     let title = document.createElement('h2');
     title.textContent = this.name;
@@ -72,48 +77,8 @@ class Store {
 
     document.body.appendChild(table);
   }
-
-  // new function to render totals table
+  //Total Render
   static renderTotals() {
-
-    function createCookieStand(name, minCustomers, maxCustomers, avgCookies) {
-      // create new store instance
-      const newStore = new Store(name, minCustomers, maxCustomers, avgCookies);
-
-      // simulate sales and render table
-      newStore.simulateSales();
-      newStore.render();
-
-      // render totals table
-      Store.renderTotals();
-    }
-
-    const newCookieStandForm = document.getElementById('new-cookie-stand-form');
-
-    newCookieStandForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting by default
-
-      // Get the form input values and call the createCookieStand function with them
-      const name = document.getElementById('name').value;
-      const minCustomers = parseInt(document.getElementById('min-customers').value);
-      const maxCustomers = parseInt(document.getElementById('max-customers').value);
-      const avgCookies = parseFloat(document.getElementById('avg-cookies').value);
-
-      createCookieStand(name, minCustomers, maxCustomers, avgCookies);
-
-      // Clear the form inputs after creating a new cookie stand
-      newCookieStandForm.reset();
-    });
-    // calculate hourly totals
-    const hourlyTotals = Array(12).fill(0);
-    for (const store of Store.stores) {
-      for (let i = 0; i < store.cookiesSold.length; i++) {
-        hourlyTotals[i] += store.cookiesSold[i];
-      }
-    }
-
-    // calculate overall total
-    const overallTotal = hourlyTotals.reduce((acc, cur) => acc + cur);
 
     // create table
     let title = document.createElement('h2');
@@ -126,7 +91,7 @@ class Store {
     header1.textContent = 'Hour';
     headerRow.appendChild(header1);
 
-    for (let i = 0; i < hourlyTotals.length; i++) {
+    for (let i = 0; i < 12; i++) {
       let header = document.createElement('th');
       header.textContent = `Hour ${i + 1}`;
       headerRow.appendChild(header);
@@ -138,40 +103,65 @@ class Store {
 
     table.appendChild(headerRow);
 
-    let dataRow1 = document.createElement('tr');
-    let dataHeader1 = document.createElement('td');
-    dataHeader1.textContent = 'Hourly Sales';
-    dataRow1.appendChild(dataHeader1);
+    let dataRow = document.createElement('tr');
+    let dataHeader = document.createElement('td');
+    dataHeader.textContent = 'Cookies Sold';
+    dataRow.appendChild(dataHeader);
 
-    let hourlyTotal = 0;
-    for (let i = 0; i < hourlyTotals.length; i++) {
-      let data = document.createElement('td');
-      data.textContent = hourlyTotals[i];
-      dataRow1.appendChild(data);
-      hourlyTotal += hourlyTotals[i];
+    let hourlyTotals = Array(12).fill(0);
+    for (const store of Store.stores) {
+      for (let i = 0; i < 12; i++) {
+        hourlyTotals[i] += store.hourlyTotals[i];
+      }
     }
 
-    let hourlyTotalData = document.createElement('td');
-    hourlyTotalData.textContent = hourlyTotal;
-    dataRow1.appendChild(hourlyTotalData);
+    let total = 0;
+    for (let i = 0; i < 12; i++) {
+      let data = document.createElement('td');
+      data.textContent = hourlyTotals[i];
+      dataRow.appendChild(data);
+      total += hourlyTotals[i];
+    }
 
-    table.appendChild(dataRow1);
+    let totalData = document.createElement('td');
+    totalData.textContent = total;
+    dataRow.appendChild(totalData);
 
-    let dataRow2 = document.createElement('tr');
-    let dataHeader2 = document.createElement('td');
-    dataHeader2.textContent = 'Overall Sales';
-    dataRow2.appendChild(dataHeader2);
-
-    let overallTotalData = document.createElement('td');
-    overallTotalData.colSpan = hourlyTotals.length + 1;
-    overallTotalData.textContent = overallTotal;
-    dataRow2.appendChild(overallTotalData);
-
-    table.appendChild(dataRow2);
+    table.appendChild(dataRow);
 
     document.body.appendChild(table);
   }
 }
+
+// add event listener for form submission
+document.querySelector('form').addEventListener('submit', (event) => {
+  event.preventDefault(); // prevent the default form submission behavior
+
+  // get the form data
+  const name = event.target.name.value;
+  const minCustomers = Number(event.target['min-customers'].value);
+  const maxCustomers = Number(event.target['max-customers'].value);
+  const avgCookies = Number(event.target['avg-cookies'].value);
+
+  // create a new store instance
+  const newStore = new Store(name, minCustomers, maxCustomers, avgCookies);
+
+  // add the new store to the stores array
+  Store.stores.push(newStore);
+
+  // keep form
+  event.preventDefault();
+
+  // re-render the tables
+  document.body.innerHTML = '';
+  for (const store of Store.stores) {
+    store.simulateSales();
+    store.render();
+  }
+
+  // render totals table
+  Store.renderTotals();
+});
 
 // create store instances
 let Seattle = new Store('Seattle', 23, 65, 6.3);
@@ -188,3 +178,5 @@ for (const store of Store.stores) {
 }
 
 Store.renderTotals();
+
+
