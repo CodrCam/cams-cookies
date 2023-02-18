@@ -1,10 +1,10 @@
 h1 {
-  font-family: sans-serif;
-  color: #A3C4BC;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #00a862;
 }
 h2, h3, h4, h5, h6 {
-  font-family: sans-serif;
-  color: #A3C4BC;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #006241;
 }
 .container {
   display: flex;
@@ -15,25 +15,25 @@ h2, h3, h4, h5, h6 {
 nav {
   width: 60%;
   text-align: center;
-  background: #000000;
+  background: #d4e9e2;
   padding: 20px;
 }
 
 table {
   margin-top: 20px;
-  background-color: #363537;
-  color: #e96d40;
+  background-color: #edebe9;
+  color: #00a862;
 }
 
 body{
-  background-color: #363537;
-  color: #e96d40;
+  background-color: #f2f0eb;
+  color: #00a862;
   text-align: center;
   list-style: inside;
 }
 a:li{
-  color: fuchsia;
+  color: #1E3932;
 }
 a:visited{
-  color: rgba(189, 225, 91, 0.691);
+  color: #1E3932(189, 225, 91, 0.691);
 }
